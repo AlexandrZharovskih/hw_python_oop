@@ -15,7 +15,7 @@ class InfoMessage:
 
     def get_message(self) -> str:
         """Сообщение о тренировке."""
-        
+
         return (f"Тип тренировки: {self.training_type}; "
                 f"Длительность: {self.duration:.3f} ч.; "
                 f"Дистанция: {self.distance:.3f} км; "
@@ -114,14 +114,14 @@ def read_package(workout_type: str, data: list) -> Training:
         'WLK': SportsWalking,
         'SWM': Swimming,
     }
-    readdat = read[workout_type](*data)
-    return readdat    
+    text1 = read[workout_type](*data)
+    return text1
 
 def main(training) -> None:
     """Главная функция."""
     info = training.show_training_info()
     print(info.get_message())
-    
+
 
 if __name__ == '__main__':
     packages = [
