@@ -76,13 +76,13 @@ class SportsWalking(Training):
     coeff_calorie_4 = 0.029
 
     def __init__(self, action: int, duration: float,
-                weight: float, height: float) -> None:
+                 weight: float, height: float) -> None:
         super().__init__(action, duration, weight)
         self.height = height
 
     def get_spent_calories(self) -> float:
         return (self.coeff_calorie_3 * self.weight
-              +(self.get_mean_speed()**2 // self.height)
+             + (self.get_mean_speed()**2 // self.height)
               * self.coeff_calorie_4 * self.weight) * (self.duration *60)
 
 
