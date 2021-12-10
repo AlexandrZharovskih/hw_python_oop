@@ -75,8 +75,11 @@ class SportsWalking(Training):
     coeff_calorie_3 = 0.035
     coeff_calorie_4 = 0.029
 
-    def __init__(self, action: int, duration: float,
-                 weight: float, height: float) -> None:
+    def __init__(self,
+                 action: int,
+                 duration: float,
+                 weight: float,
+                 height: float) -> None:
         super().__init__(action, duration, weight)
         self.height = height
 
