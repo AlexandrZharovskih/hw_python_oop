@@ -119,7 +119,7 @@ class Swimming(Training):
                 * self.coeff_calorie_6 * self.weight)
 
 
-def read_package(workout_type: str, data: list[dict]) -> Training:
+def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
     read: dict = {
         'RUN': Running,
