@@ -3,7 +3,7 @@ from dataclasses import asdict, dataclass
 
 @dataclass
 class InfoMessage:
-    """Информационное сообщение о тренировке."""
+    """Training information message."""
     training_type: str
     duration: float  # hours
     distance: float  # km
@@ -20,7 +20,7 @@ class InfoMessage:
 
 @dataclass
 class Training:
-    """Базовый класс тренировки."""
+    """Basic training class."""
     LEN_STEP: float = 0.65  # meters
     M_IN_KM: int = 1000  # meters
 
@@ -30,19 +30,19 @@ class Training:
         self.weight = weight  # kg
 
     def get_distance(self) -> float:
-        """Получить дистанцию в км."""
+        """Get the distance in km."""
         return self.action * self.LEN_STEP / self.M_IN_KM
 
     def get_mean_speed(self) -> float:
-        """Получить среднюю скорость движения."""
+        """Get the average speed of movement."""
         return self.get_distance() / self.duration
 
     def get_spent_calories(self) -> float:
-        """Получить количество затраченных калорий."""
+        """Get the number of calories consumed."""
         pass
 
     def show_training_info(self) -> InfoMessage:
-        """Вернуть информационное сообщение о выполненной тренировке."""
+        """Return the information message about the completed training."""
         result: InfoMessage = InfoMessage(type(self).__name__,
                                           self.duration,
                                           self.get_distance(),
@@ -52,7 +52,7 @@ class Training:
 
 
 class Running(Training):
-    """Тренировка: бег."""
+    """Training: running."""
 
     coeff_calorie_1 = 18
     coeff_calorie_2 = 20
@@ -68,7 +68,7 @@ class Running(Training):
 
 
 class SportsWalking(Training):
-    """Тренировка: спортивная ходьба."""
+    """Training: sports walking."""
 
     coeff_calorie_3 = 0.035
     coeff_calorie_4 = 0.029
@@ -91,7 +91,7 @@ class SportsWalking(Training):
 
 @dataclass
 class Swimming(Training):
-    """Тренировка: плавание."""
+    """Training: swimming."""
     coeff_calorie_5 = 1.1
     coeff_calorie_6 = 2.0
     LEN_STEP = 1.38  # meters
@@ -112,7 +112,7 @@ class Swimming(Training):
 
 
 def read_package(workout_type: str, data: list[int]) -> Training:
-    """Прочитать данные полученные от датчиков."""
+    """Read the data received from the sensors."""
     read: dict = {
         'RUN': Running,
         'WLK': SportsWalking,
@@ -126,7 +126,7 @@ def read_package(workout_type: str, data: list[int]) -> Training:
 
 
 def main(training) -> None:
-    """Главная функция."""
+    """Main function."""
     info = training.show_training_info()
     print(info.get_message())
 
