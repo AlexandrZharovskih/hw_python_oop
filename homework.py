@@ -1,36 +1,28 @@
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 
 
 @dataclass
 class InfoMessage:
     """Информационное сообщение о тренировке."""
-    def __init__(self,
-                 training_type: str,
-                 duration: float,
-                 distance: float,
-                 speed: float,
-                 calories: float) -> None:
-        self.training_type = training_type
-        self.duration = duration  # hour
-        self.distance = distance  # km
-        self.speed = speed  # km/h
-        self.calories = calories  # kсal
+    training_type: str
+    duration: float  # hours
+    distance: float  # km
+    speed: float  # km/h
+    calories: float  # Kcal
+
+    message = ('Тип тренировки: {training_type}; Длительность: {duration:.3f} '
+               'ч.; Дистанция: {distance:.3f} км; Ср. скорость: {speed:.3f} '
+               'км/ч; Потрачено ккал: {calories:.3f}.')
 
     def get_message(self) -> str:
-        """Сообщение о тренировке."""
-
-        return (f"Тип тренировки: {self.training_type}; "
-                f"Длительность: {self.duration:.3f} ч.; "
-                f"Дистанция: {self.distance:.3f} км; "
-                f"Ср. скорость: {self.speed:.3f} км/ч; "
-                f"Потрачено ккал: {self.calories:.3f}.")
+        return self.message.format(**asdict(self))
 
 
 @dataclass
 class Training:
     """Базовый класс тренировки."""
-    LEN_STEP: float = 0.65  # m
-    M_IN_KM: int = 1000  # m
+    LEN_STEP: float = 0.65  # meters
+    M_IN_KM: int = 1000  # meters
 
     def __init__(self, action: int, duration: float, weight: float) -> None:
         self.action = action
@@ -102,7 +94,7 @@ class Swimming(Training):
     """Тренировка: плавание."""
     coeff_calorie_5 = 1.1
     coeff_calorie_6 = 2.0
-    LEN_STEP = 1.38  # m
+    LEN_STEP = 1.38  # meters
 
     def __init__(self, action: int, duration: float, weight: float,
                  length_pool: int, count_pool: int) -> None:
@@ -119,14 +111,18 @@ class Swimming(Training):
                 * self.coeff_calorie_6 * self.weight)
 
 
-def read_package(workout_type: str, data: list) -> Training:
+def read_package(workout_type: str, data: list[int]) -> Training:
     """Прочитать данные полученные от датчиков."""
     read: dict = {
         'RUN': Running,
         'WLK': SportsWalking,
         'SWM': Swimming,
     }
-    return read[workout_type](*data)
+    if workout_type not in read.keys():
+        raise NameError("Type_Error")
+    if workout_type in read.keys():
+        workout_class = read[workout_type]
+    return workout_class(*data)
 
 
 def main(training) -> None:
