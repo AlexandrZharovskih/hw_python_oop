@@ -122,9 +122,7 @@ def read_package(workout_type: str, data: list[int]) -> Training:
     }
     if workout_type not in read.keys():
         raise NameError("Type_Error")
-    if workout_type in read.keys():
-        workout_class = read[workout_type]
-    return workout_class(*data)
+    return read[workout_type](*data)
 
 
 def main(training) -> None:
